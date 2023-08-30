@@ -12,12 +12,10 @@ session = requests.Session()
 response = session.get(url)
 cookies = (session.cookies.get_dict())
 cookies_str = ';'.join([f"{key}={value}" for key, value in cookies.items()])
-# print(cookies_str)
 
-# response = requests.get(url)
 soup = BeautifulSoup(response.text, 'html.parser') 
 token = soup.find('input',{'name':'__RequestVerificationToken'}).get('value')
-# print(token)
+
 
 payload = {
         '__RequestVerificationToken': token,
@@ -48,7 +46,7 @@ header = {
 click_url = 'https://www.tcb-bank.com.tw/api/client/ForeignExchange/GetSpotForeignExchangeSpecific'
 
 response = requests.post(click_url, data = payload, headers= header)
-# print(response.json())
+
 if response.status_code == 200:
     # 解析返回的內容
        soup = BeautifulSoup(response.content, 'html.parser')
@@ -58,42 +56,7 @@ else:
        print( response.status_code )
 
 data = json.loads(response.text)
-# df = pandas.DataFrame(
-#        data["CurrencyName"],
-#        index=pandas.to_datetime(
-#               numpy.array(data["CurrencyName"][0])*1000),
-#        columns=["123"]
-#        )
-# print(df[:3])
 
-
-# # 轉換為pandas DataFrame
-# df = pandas.DataFrame(data['result'])
-
-# # 選擇要導出的欄位
-# selected_columns = ['CurrencyName', 'Type', 'PromptExchange', 'CashExchange']
-# df_selected = df[selected_columns]
-
-# # 導出為CSV檔案
-# csv_file_name = 'output.csv'
-# df_selected.to_csv(csv_file_name, index=False, encoding='utf-8')
-
-# print(f'CSV檔案 {csv_file_name} 已成功生成。')
-
-# # 選擇特定資料的值
-# specific_data_value = df.loc[df['Type'] == '買入', 'PromptExchange'].iloc[0]
-
-# # 創建一個新的DataFrame來導出
-# new_data = {
-#     'SpecificValue': [specific_data_value]
-# }
-# new_df = pandas.DataFrame(new_data)
-
-# # 導出為CSV檔案
-# csv_file_name = 'output_specific_value.csv'
-# new_df.to_csv(csv_file_name, index=False, encoding='utf-8')
-
-# print(f'CSV檔案 {csv_file_name} 已成功生成，包含特定資料的值作為欄位值。')
 
 # 轉換為pandas DataFrame
 df = pandas.DataFrame(data['result'])
@@ -134,30 +97,3 @@ result_df.to_csv(csv_file_name, index=False, encoding='utf-8')
 
 print(f'CSV檔案 {csv_file_name} 已成功生成，包含每種Currency的表格。')
 
-#----------顯示某一排---------------
-# # 選擇同時滿足兩個條件的數據行
-# selected_rows_in = df.loc[(df['Currency'] == 'USD') & (df['Type'] == '買入')]
-# selected_rows_out = df.loc[(df['Currency'] == 'USD') & (df['Type'] == '賣出')]
-
-# # 從篩選後的DataFrame中選擇特定數據點
-# specific_data_value_prompt_in = selected_rows_in.iloc[0, selected_rows_in.columns.get_loc('PromptExchange')]
-# specific_data_value_prompt_out = selected_rows_out.iloc[0, selected_rows_out.columns.get_loc('PromptExchange')]
-# specific_data_value_cash_in = selected_rows_in.iloc[0, selected_rows_in.columns.get_loc('CashExchange')]
-# specific_data_value_cash_out = selected_rows_out.iloc[0, selected_rows_out.columns.get_loc('CashExchange')]
-# # print(f'Specific Data Value: {specific_data_value_prompt_in,specific_data_value_prompt_out,specific_data_value_cash_in,specific_data_value_cash_out}')
-
-# # 創建包含數據的DataFrame
-# data = {
-#     'SpecificValue': ['幣別','銀行買入即期', '銀行賣出即期', '銀行買入現鈔', '銀行賣出現鈔'],
-#     'Value': ['美金USD',specific_data_value_prompt_in, specific_data_value_prompt_out, specific_data_value_cash_in, specific_data_value_cash_out]
-# }
-# table_df = pandas.DataFrame(data)
-
-# # 轉置DataFrame，將行轉換為列
-# transposed_table_df = table_df.transpose()
-
-# # 導出為CSV檔案
-# csv_file_name = 'output_table1.csv'
-# transposed_table_df.to_csv(csv_file_name, header=False, index=False, encoding='utf-8')
-
-# print(f'CSV檔案 {csv_file_name} 已成功生成，包含特定數據值的表格。')
