@@ -1,6 +1,10 @@
 # 爬蟲-合作金庫即時匯率
 Grab the real-time exchange rate information of the TCB
 
+#### 01 主程式碼 [爬蟲](Web-Scraping)  
+#### 02 網頁 [GUI](run_python_with_gui)  
+#### 03 config [改時間](config)
+
 ## Web-Scraping  
 ### 爬蟲抓取網站資料  
 _預設為2023.8.28 10:00:00_  
@@ -152,6 +156,13 @@ window.setGeometry(400, 400, 400, 400)
 window.show()
 
 sys.exit(app.exec_())
-</pre>
+</pre>  
 
+## CONFIG
+### 調整時間
+<pre>
+[Request]
+date = 2023-08-29
+time = 2
+</pre>
 
