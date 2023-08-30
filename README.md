@@ -1,9 +1,9 @@
 # 爬蟲-合作金庫即時匯率
 Grab the real-time exchange rate information of the TCB
 
-#### 01 主程式碼 [爬蟲](Web-Scraping)  
-#### 02 網頁 [GUI](run_python_with_gui)  
-#### 03 config [改時間](config)
+#### 01 主程式碼 [爬蟲](Web-Scraping.py)  
+#### 02 網頁 [GUI](run_python_with_gui.py)  
+#### 03 config [改時間](config.ini)
 
 ## Web-Scraping  
 ### 爬蟲抓取網站資料  
