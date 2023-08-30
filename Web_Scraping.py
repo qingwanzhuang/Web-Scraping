@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas
 import json
-import numpy
+import configparser
 
 print('web scraping start')
 url = 'https://www.tcb-bank.com.tw/personal-banking/deposit-exchange/exchange-rate/spot'
@@ -12,17 +12,20 @@ session = requests.Session()
 response = session.get(url)
 cookies = (session.cookies.get_dict())
 cookies_str = ';'.join([f"{key}={value}" for key, value in cookies.items()])
-# print(cookies_str)
 
-# response = requests.get(url)
 soup = BeautifulSoup(response.text, 'html.parser') 
 token = soup.find('input',{'name':'__RequestVerificationToken'}).get('value')
-# print(token)
+
+# 創建 ConfigParser 對象
+config = configparser.ConfigParser()
+
+# 讀取配置文件
+config.read('config.ini')
 
 payload = {
         '__RequestVerificationToken': token,
-        'date': '2023-08-28',
-        'time': '2'
+        'date': config.get('Request','date'),
+        'time': config.get('Request','time')
     }
 
 header = {
@@ -48,7 +51,7 @@ header = {
 click_url = 'https://www.tcb-bank.com.tw/api/client/ForeignExchange/GetSpotForeignExchangeSpecific'
 
 response = requests.post(click_url, data = payload, headers= header)
-# print(response.json())
+
 if response.status_code == 200:
     # 解析返回的內容
        soup = BeautifulSoup(response.content, 'html.parser')
@@ -97,4 +100,3 @@ csv_file_name = 'output_currency_table.csv'
 result_df.to_csv(csv_file_name, index=False, encoding='utf-8')
 
 print(f'CSV檔案 {csv_file_name} 已成功生成，包含每種Currency的表格。')
-
