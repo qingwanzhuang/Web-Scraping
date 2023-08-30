@@ -5,7 +5,6 @@ Grab the real-time exchange rate information of the TCB
 ### 爬蟲抓取網站資料  
 _預設為2023.8.28 10:00:00_  
 <pre>
-\```python
 import requests
 from bs4 import BeautifulSoup
 import pandas
@@ -105,12 +104,11 @@ csv_file_name = 'output_currency_table.csv'
 result_df.to_csv(csv_file_name, index=False, encoding='utf-8')
 
 print(f'CSV檔案 {csv_file_name} 已成功生成，包含每種Currency的表格。')
-\```
 </pre>  
 ## Run Python With GUI
 ### 按鈕顯示結果
 <pre>
-  import sys
+import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QVBoxLayout, QMessageBox
 import subprocess
 
