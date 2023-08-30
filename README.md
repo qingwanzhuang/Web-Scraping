@@ -108,7 +108,7 @@ for currency in currencies:
 result_df = pandas.concat(result_dfs, ignore_index=True)
 
 # 導出為CSV檔案
-csv_file_name = config.get('Request','time')
+csv_file_name = config.get('Request','csv_file_name')
 result_df.to_csv(csv_file_name, index=False, encoding='utf-8')
 
 print(f'CSV檔案 {csv_file_name} 已成功生成，包含每種Currency的表格。')
